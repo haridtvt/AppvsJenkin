@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        nodejs 'nodejs'
+    }
     stages {
         stage('check out') {
             steps {
@@ -9,6 +12,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 dir('backend') {
+                    sh 'node -v'
                     sh 'npm install'
                 }
             }
