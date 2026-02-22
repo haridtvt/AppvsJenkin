@@ -1,0 +1,24 @@
+version: '3.8'
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins-server
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - ./jenkins_compose:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - dev-networks
+  sonarqube:
+    image: sonarqube:lts-community
+    container_name: sonarqube-server
+    ports:
+      - "9000:9000"
+    networks:
+      - dev-networks
+networks:
+  dev-networks:
+    driver: brigde  
