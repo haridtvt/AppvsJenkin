@@ -29,21 +29,22 @@ pipeline {
             }
         }
 
-        stage('Deployment') {
+        stage('Deploy Backend') {
             steps {
                 dir('backend') {
                     script {
-                        echo 'Deploying with PM2...'
-                        sh "pm2 delete devops-backend || true"
+                        sh "fuser -k 6000/tcp || true"
+                        
                         sh """
-                            DB_HOST=${DB_HOST} \
-                            DB_USER=${DB_USER} \
-                            DB_PASS=${DB_PASS} \
-                            DB_NAME=${DB_NAME} \
-                            PORT=5000 \
-                            pm2 start server.js --name devops-backend
+                            export JENKINS_NODE_COOKIE=dontKillMe
+                            export DB_HOST='IP_CỦA_RDS_HOẶC_EC2' 
+                            export DB_USER='admin'
+                            export DB_PASS='password_của_bạn'
+                            export DB_NAME='devops_db'
+                            export PORT=6000
+                            nohup node server.js > backend_deploy.log 2>&1 &
                         """
-                        sh "pm2 list"
+                        sh "sleep 5 && cat backend_deploy.log"
                     }
                 }
             }
