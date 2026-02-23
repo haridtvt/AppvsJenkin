@@ -9,7 +9,7 @@ exports.register = async (req, res) => {
             [fullname, age, username, password]
         );
         console.log("Insert result:", result);
-        res.status(201).json({ message: "User registered successfully" });
+        res.status(201).json({ message: "User registered successfullyaaaaaaaaaa" });
     } catch (error) {
         console.error("Database Error:", error.message);
         res.status(500).json({ error: "Internal Server Error", details: error.message });
