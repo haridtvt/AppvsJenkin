@@ -8,7 +8,7 @@ pipeline {
         DB_USER = 'admin'
         DB_PASS = credentials('db-password-id')
         DB_NAME = 'devops_db'
-        PORT    = '5000'
+        PORT    = '6000'
     }
 
     stages {
