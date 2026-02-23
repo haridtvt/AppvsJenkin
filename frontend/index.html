@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>DevOps Shack Login</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; padding: 50px; background: #f4f4f4; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); width: 300px; }
+        input { width: 100%; margin-bottom: 10px; padding: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background: #28a745; color: white; border: none; cursor: pointer; }
+        #message { margin-top: 15px; text-align: center; font-weight: bold; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Đăng Nhập</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="handleLogin()">Login</button>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        async function handleLogin() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const msgDiv = document.getElementById('message');
+
+            try {
+                const response = await fetch('http://localhost:3000/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pass })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    msgDiv.innerHTML = `<span class="success">✅ ${data.message}</span>`;
+                } else {
+                    msgDiv.innerHTML = `<span class="error">❌ ${data.message}</span>`;
+                }
+            } catch (err) {
+                msgDiv.innerHTML = `<span class="error">Lỗi kết nối Server!</span>`;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -21,3 +21,28 @@ exports.getAllUsers = async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 };
+
+exports.loginUser = async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        const [rows] = await db.execute(
+            "SELECT * FROM users WHERE username = ? AND password = ?", 
+            [username, password]
+        );
+
+        if (rows.length > 0) {
+            res.status(200).json({ 
+                success: true, 
+                message: "Login thành công!", 
+                user: rows[0].username 
+            });
+        } else {
+            res.status(401).json({ 
+                success: false, 
+                message: "Sai tài khoản hoặc mật khẩu rồi!" 
+            });
+        }
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+};
