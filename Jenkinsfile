@@ -4,7 +4,7 @@ pipeline {
     environment {
         DB_HOST = 'devops-db-instance.crkaokm4y64r.ap-southeast-1.rds.amazonaws.com'
         DB_USER = 'admin'
-        DB_PASS = credentials('db-password')
+        DB_PASS = credentials('db-password-id')
         DB_NAME = 'devops_db'
         PORT    = '5000'
     }
