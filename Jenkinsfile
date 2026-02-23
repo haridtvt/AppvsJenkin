@@ -36,13 +36,13 @@ pipeline {
                         sh "fuser -k 6000/tcp || true"
                         
                         sh """
-                            export JENKINS_NODE_COOKIE=dontKillMe
-                            export DB_HOST='IP_CỦA_RDS_HOẶC_EC2' 
+                        export JENKINS_NODE_COOKIE=dontKillMe
+                            export DB_HOST='devops-db-instance.crkaokm4y64r.ap-southeast-1.rds.amazonaws.com'
                             export DB_USER='admin'
-                            export DB_PASS='password_của_bạn'
+                            export DB_PASS='${DB_PASS}'
                             export DB_NAME='devops_db'
-                            export PORT=6000
-                            nohup node server.js > backend_deploy.log 2>&1 &
+                            export PORT=5000
+                            nohup node server.js > app.log 2>&1 &
                         """
                         sh "sleep 5 && cat backend_deploy.log"
                     }
