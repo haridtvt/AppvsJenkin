@@ -1,48 +1,31 @@
 const db = require('../config/db');
 
-exports.registerUser = async (req, res) => {
-    const { username, password } = req.body;
+exports.register = async (req, res) => {
+    const { fullname, age, username, password } = req.body;
     try {
-        const [result] = await db.execute(
-            "INSERT INTO users (username, password) VALUES (?, ?)", 
-            [username, password]
+        await db.execute(
+            'INSERT INTO users (fullname, age, username, password) VALUES (?, ?, ?, ?)',
+            [fullname, age, username, password]
         );
-        res.status(201).json({ message: "User created!", id: result.insertId });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(201).json({ message: "User registered successfully!" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 };
 
-exports.getAllUsers = async (req, res) => {
-    try {
-        const [rows] = await db.execute("SELECT id, username FROM users");
-        res.json(rows);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-};
-
-exports.loginUser = async (req, res) => {
+exports.login = async (req, res) => {
     const { username, password } = req.body;
     try {
         const [rows] = await db.execute(
-            "SELECT * FROM users WHERE username = ? AND password = ?", 
+            'SELECT * FROM users WHERE username = ? AND password = ?',
             [username, password]
         );
-
         if (rows.length > 0) {
-            res.status(200).json({ 
-                success: true, 
-                message: "Login thành công!", 
-                user: rows[0].username 
-            });
+            res.status(200).json({ message: "Login successful", user: rows[0] });
         } else {
-            res.status(401).json({ 
-                success: false, 
-                message: "Sai tài khoản hoặc mật khẩu rồi!" 
-            });
+            res.status(401).json({ message: "Invalid credentials" });
         }
-    } catch (err) {
-        res.status(500).json({ error: err.message });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 };

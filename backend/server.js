@@ -2,13 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const logger = require('./middleware/logger');
 const userRoutes = require('./routes/userRoutes');
+require('dotenv').config();
 
 const app = express();
-app.use(express.json());
 app.use(cors());
-app.use(logger); // Sử dụng middleware
+app.use(express.json());
+app.use(logger);
 
-app.use('/api', userRoutes); // Tất cả API sẽ bắt đầu bằng /api
+app.use('/api/users', userRoutes);
 
-const PORT = 3000;
-app.listen(PORT, () => console.log(`Server chạy tại port ${PORT}`));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
