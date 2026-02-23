@@ -35,11 +35,11 @@ pipeline {
                     script {
                         // Kill existing process on port 5000 if exists
                         sh "pkill -f 'node server.js' || true"
-                        sh "echo $pwd"
+                        // sh "echo $pwd"
                         echo "Starting Backend on Port 5000..."
                         // Start application in background
                         sh "DB_HOST=${DB_HOST} DB_USER=${DB_USER} DB_PASS=${DB_PASS} DB_NAME=${DB_NAME} PORT=${PORT} nohup node server.js > app.log 2>&1 &"
-                        sh "sleep 3 && cat server.log"
+                        sh "sleep 3 && cat /var/jenkins_home/workspace/dev-project/backend/server.log"
                     }
                 }
             }
