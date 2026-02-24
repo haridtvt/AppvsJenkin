@@ -15,31 +15,31 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps {
-                echo 'Fetching code from Repository...'
-                checkout scm
+                steps {
+                    echo 'Fetching code from Repository...'
+                    checkout scm
+                }
             }
-        }
-stage('SonarQube Analysis') {
-            steps {
-                withSonarQubeEnv("${SONAR_SERVER_NAME}") {
-                    script {
-                        sh "npm install -g sonar-scanner || true" 
-                        sh """
-                            sonar-scanner \
-                            -Dsonar.projectKey=devops-project \
-                            -Dsonar.sources=. \
-                            -Dsonar.host.url=http://47.130.213.157:9000 \
-                            -Dsonar.login=sqa_66f9ae566af90f6e1613baf2b7f67ee93f96bb52
-                        """
+        stage('SonarQube Analysis') {
+                steps {
+                    withSonarQubeEnv("${SONAR_SERVER_NAME}") {
+                        script {
+                            sh "npm install -g sonar-scanner || true" 
+                            sh """
+                                sonar-scanner \
+                                -Dsonar.projectKey=devops-project \
+                                -Dsonar.sources=. \
+                                -Dsonar.host.url=http://47.130.213.157:9000 \
+                                -Dsonar.login=sqa_66f9ae566af90f6e1613baf2b7f67ee93f96bb52
+                            """
+                        }
                     }
                 }
             }
-        }
 
         stage("Quality Gate") {
             steps {
-                timeout(time: 5, unit: 'MINUTES') {
+                timeout(time: 60, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
             }
