@@ -1,25 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
+    <div class="card welcome-card">
         <div class="social-links">
-            <a href="https://linkedin.com">LinkedIn</a>
-            <a href="https://instagram.com">Insta</a>
-            <a href="https://youtube.com">YouTube</a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
         </div>
-        <h1>Welcome!</h1>
-        <p id="welcomeMsg"></p>
-        <button class="logout-btn" onclick="logout()">Logout</button>
+        <div style="font-size: 3rem; color: #2563eb; margin-bottom: 1rem;">
+            <i class="fas fa-user-circle"></i>
+        </div>
+        <h2>Welcome back!</h2>
+        <p id="userName" style="font-size: 1.2rem; font-weight: 600; color: #1e293b;"></p>
+        <p style="color: #64748b; margin-top: 0.5rem;">You are successfully logged in.</p>
+        
+        <button class="logout-btn" onclick="logout()">
+            <i class="fas fa-sign-out-alt"></i> Sign Out
+        </button>
     </div>
 
     <script>
         const user = localStorage.getItem('user');
         if (!user) window.location.href = 'index.html';
-        document.getElementById('welcomeMsg').innerText = "Hello, " + user;
+        document.getElementById('userName').innerText = user;
 
         function logout() {
             localStorage.removeItem('user');
