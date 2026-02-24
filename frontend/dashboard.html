@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="social-links">
+            <a href="https://linkedin.com">LinkedIn</a>
+            <a href="https://instagram.com">Insta</a>
+            <a href="https://youtube.com">YouTube</a>
+        </div>
+        <h1>Welcome!</h1>
+        <p id="welcomeMsg"></p>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <script>
+        const user = localStorage.getItem('user');
+        if (!user) window.location.href = 'index.html';
+        document.getElementById('welcomeMsg').innerText = "Hello, " + user;
+
+        function logout() {
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

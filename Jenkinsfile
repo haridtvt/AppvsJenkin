@@ -9,6 +9,7 @@ pipeline {
         DB_PASS = credentials('db-password-id')
         DB_NAME = 'devops_db'
         PORT    = '6000'
+        NGINX_PATH = '/usr/share/nginx/html'
     }
 
     stages {
@@ -47,6 +48,12 @@ pipeline {
                         sh "sleep 5 && cat backend_deploy.log"
                     }
                 }
+            }
+        }
+        stage('Deploy Frontend') {
+            steps {
+                echo 'Deploying Frontend to Nginx webroot...'
+                sh "cp -v frontend/* ${NGINX_PATH}/"
             }
         }
     }
