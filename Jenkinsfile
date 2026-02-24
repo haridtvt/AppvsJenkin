@@ -8,7 +8,7 @@ pipeline {
         DB_USER = 'admin'
         DB_PASS = credentials('db-password-id')
         DB_NAME = 'devops_db'
-        PORT    = '6000'
+        PORT    = '5001'
         NGINX_PATH = '/usr/share/nginx/html'
     }
 
@@ -34,7 +34,7 @@ pipeline {
             steps {
                 dir('backend') {
                     script {
-                        sh "fuser -k 6000/tcp || true"
+                        sh "fuser -k 5001/tcp || true"
                         
                         sh """
                         export JENKINS_NODE_COOKIE=dontKillMe

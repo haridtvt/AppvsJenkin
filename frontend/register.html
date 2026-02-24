@@ -27,7 +27,7 @@
                 password: document.getElementById('password').value
             };
 
-            const res = await fetch('http://47.130.213.157:6000/api/users/register', {
+            const res = await fetch('http://47.130.213.157:5001/api/users/register', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(payload)
