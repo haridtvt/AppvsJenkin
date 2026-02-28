@@ -2,18 +2,23 @@ version: '3.8'
 services:
   jenkins:
     image: jenkins/jenkins:lts
+#    command: sh -c "apt update && apt install -y libatomic1"
+    restart: unless-stopped
     container_name: jenkins-server
     user: root
     ports:
-      - "8080:8080"
+      - "8081:8080"
       - "50000:50000"
+      - "5000:5000"
     volumes:
       - ./jenkins_compose:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/share/nginx/html:/usr/share/nginx/html
     networks:
       - dev-networks
   sonarqube:
     image: sonarqube:lts-community
+    restart: unless-stopped
     container_name: sonarqube-server
     ports:
       - "9000:9000"
@@ -21,4 +26,4 @@ services:
       - dev-networks
 networks:
   dev-networks:
-    driver: brigde  
+    driver: bridge
